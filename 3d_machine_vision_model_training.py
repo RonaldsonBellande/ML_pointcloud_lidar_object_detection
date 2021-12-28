@@ -46,7 +46,7 @@ class computer_vision_training(computer_vision_building):
         start = "ending --: " 
         self.get_training_time(start)
         
-        self.model.save_weights("models/" + self.image_type + "_" + self.category + "_" + self.name + "_" + self.model_type + "_computer_vision_categories_"+ str(self.number_classes)+"_model.h5")
+        self.model.save("models/" + self.image_type + "_" + self.category + "_" + self.name + "_" + self.model_type + "_computer_vision_categories_"+ str(self.number_classes)+"_model.h5")
    
 
     def evaluate_model(self):
