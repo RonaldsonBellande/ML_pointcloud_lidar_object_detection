@@ -4,11 +4,12 @@ from header_imports import *
 class computer_vision_building(object):
     def __init__(self, model_type):
 
-        self.image_file = []
+        self.pointcloud = []
         self.label_name = []
         self.image_size = 224
-        self.path  = "PointCloud_data"
-        self.true_path = self.path + "PointCloud"
+        self.path  = "PointCloud_data/"
+        self.true_path = self.path + "PointCloud/"
+        self.number_of_points = 2048
         self.valid_images = [".off"]
         self.model_type = model_type
         self.model_summary = "model_summary/"
@@ -37,10 +38,15 @@ class computer_vision_building(object):
 
         for i in range(0, self.number_classes):
             self.check_valid(self.category_names[i])
-
+        
+        for label in self.category_names:
+            self.pointcloud_file = [self.true_path + label + '/' + i for i in os.listdir(self.true_path + '/' + label)]
+            for point in self.pointcloud_file:
+                self.pointcloud.append(trimesh.load(point).sample(self.number_of_points))
+                self.label_name.append(label)
         
         self.label_name = self.labelencoder.fit_transform(self.label_name)
-        self.image_file = np.array(self.image_file)
+        self.pointcloud = np.array(self.pointcloud)
         self.label_name = np.array(self.label_name)
         self.label_name = self.label_name.reshape((len(self.image_file),1)) 
 
@@ -54,10 +60,9 @@ class computer_vision_building(object):
     
 
        
-
     def splitting_data_normalize(self):
 
-        self.X_train, self.X_test, self.Y_train_vec, self.Y_test_vec = train_test_split(self.image_file, self.label_name, test_size = 0.10, random_state = 42)
+        self.X_train, self.X_test, self.Y_train_vec, self.Y_test_vec = train_test_split(self.image_file, self.pointcloud, test_size = 0.10, random_state = 42)
         self.input_shape = self.X_train.shape[1:]
         self.Y_train = tf.keras.utils.to_categorical(self.Y_train_vec, self.number_classes)
         self.Y_test = tf.keras.utils.to_categorical(self.Y_test_vec, self.number_classes)
