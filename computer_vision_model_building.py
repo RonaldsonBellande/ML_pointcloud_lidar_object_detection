@@ -91,12 +91,12 @@ class computer_vision_building(object):
     def create_models_2(self):
 
         self.model = Sequential()
-        self.model.add(Conv2D(filters=64, kernel_size=(3,3), activation="relu", input_shape = self.input_shape))
-        self.model.add(Conv2D(filters=64, kernel_size=(3,3), activation="relu"))
+        self.model.add(Conv2D(filters=64, kernel_size=(3,3), strides=(1,1), padding="same", activation="relu", input_shape = self.input_shape))
+        self.model.add(Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding="same",activation="relu"))
         self.model.add(Dropout(rate=0.25))
-        self.model.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(filters=16, kernel_size=(3,3), strides=(1,1), padding="same",activation="relu"))
         self.model.add(MaxPooling2D(pool_size = (1,1)))
-        self.model.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(filters=8, kernel_size=(3,3), strides=(1,1), padding="same",activation="relu"))
         self.model.add(Dropout(rate=0.25))
         self.model.add(Flatten())
         self.model.add(Dense(512, activation="relu"))
