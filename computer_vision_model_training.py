@@ -5,6 +5,7 @@ class computer_vision_training(computer_vision_building):
         super().__init__(model_type)
         
         self.model_type = model_type
+        self.number_images_to_plot = 25
         self.batch_size = [10, 20, 40, 60, 80, 100]
         self.epochs = [1, 5, 15, 50, 100, 200]
         self.graph_path = "graph_charts/"
@@ -27,9 +28,9 @@ class computer_vision_training(computer_vision_building):
         self.get_training_time("starting --: ")
 
         self.computer_vision_model = self.model.fit(self.X_train, self.Y_train_vec,
-                batch_size=self.batch_size[0],
+                batch_size=self.batch_size[4],
                 validation_split=0.10,
-                epochs=self.epochs[0],
+                epochs=self.epochs[3],
                 callbacks=[self.callback_1, self.callback_2, self.callback_3],
                 shuffle=True)
 
@@ -38,7 +39,7 @@ class computer_vision_training(computer_vision_building):
    
 
     def evaluate_model(self):
-        evaluation = self.model.evaluate(self.X_test, self.Y_test, verbose=1)
+        evaluation = self.model.evaluate(self.X_test, self.Y_test_vec, verbose=1)
 
         with open(self.graph_path + self.model_type + "_evaluate_computer_vision_category_" + str(self.number_classes) + ".txt", 'w') as write:
             write.writelines("Loss: " + str(evaluation[0]) + "\n")
@@ -76,10 +77,9 @@ class computer_vision_training(computer_vision_building):
         predicted_classes = self.model.predict(self.X_test)
 
         for i in range(self.number_images_to_plot):
-            plt.subplot(10,10,i+1)
-            fig=plt.imshow(self.X_test[i,:,:,:])
+            plt.subplot(5,5,i+1)
             plt.axis('off')
-            plt.title("Predicted - {}".format(self.model_categories[np.argmax(predicted_classes, axis=1)] ) + "\n Actual - {}".format(self.model_categories[self.Y_test_vec[i,0]] ),fontsize=1)
+            plt.title("Predicted - {}".format(self.category_names[np.argmax(predicted_classes[i], axis=0)]) + "\n Actual - {}".format(self.category_names[np.argmax(self.Y_test_vec[i,0])]),fontsize=1)
             plt.tight_layout()
             plt.savefig(self.graph_path + self.model_type + '_prediction' + str(self.number_classes) + '.png')
 

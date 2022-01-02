@@ -47,7 +47,6 @@ class computer_vision_building(object):
         
         self.label_name = self.labelencoder.fit_transform(self.label_name)
         self.pointcloud = np.array(self.pointcloud)
-
         self.pointcloud =  self.pointcloud.reshape(self.pointcloud.shape[0], self.pointcloud.shape[1], self.pointcloud.shape[2], 1)
         self.label_name = np.array(self.label_name)
         self.label_name = tf.keras.utils.to_categorical(self.label_name , num_classes=self.number_classes)
@@ -66,9 +65,6 @@ class computer_vision_building(object):
 
         self.X_train, self.X_test, self.Y_train_vec, self.Y_test_vec = train_test_split(self.pointcloud, self.label_name, test_size = 0.10, random_state = 42)
         self.input_shape = self.X_train.shape[1:]
-        print(self.X_train.shape)
-        print(self.Y_train_vec.shape)
-        print(self.input_shape)
         self.Y_train = tf.keras.utils.to_categorical(self.Y_train_vec, self.number_classes)
         self.Y_test = tf.keras.utils.to_categorical(self.Y_test_vec, self.number_classes)
         self.X_train = self.X_train.astype("float32") / 255
