@@ -84,9 +84,6 @@ else:
 
 from computer_vision_model_building import *
 from computer_vision_model_training import *
-#from computer_vision_model_classification import *
-#from computer_vision_model_prediction import *
-#from computer_vision_model_detection import *
-#from computer_vision_model_segmentation import *
-#from computer_vision_model_transfer_learning import *
-#from utilities import *
+from computer_vision_model_classification import *
+from computer_vision_model_transfer_learning import *
+from pointcloud_imagery import *
