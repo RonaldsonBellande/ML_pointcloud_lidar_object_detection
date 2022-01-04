@@ -1,7 +1,5 @@
 from header_imports import *
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
 class pointcloud_imagery(object):
     def __init__(self):
         
@@ -10,10 +8,8 @@ class pointcloud_imagery(object):
         self.valid_images = [".off"]
         self.structure()
         self.save_path = "pointcloud_visualization/" 
-
     
     def structure(self):
-
         self.category_names =  os.listdir(self.true_path)
         folder = next(os.walk(self.true_path))[1]
         self.number_classes = len(folder)
@@ -27,7 +23,7 @@ class pointcloud_imagery(object):
 
     def read_file_type(self, input_file):
         figure = plt.figure()
-        axis = fig.add_subplot(111, projection='3d')
+        axis = figure.add_subplot(111, projection='3d')
         self.files = [self.true_path + input_file + '/' + i for i in os.listdir(self.true_path + '/' + input_file)]
         
         for pointcloud_files in self.files:
@@ -36,9 +32,11 @@ class pointcloud_imagery(object):
             faces_area = np.zeros((len(face)))
             vertice = np.array(vertice)
             
-            self.save_path = "pointcloud_visualization/" 
+            self.save_path = "pointcloud_visualization/"
             axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
-            figure.savefig(str(self.save_path) + str(input_file) + "/" + " 1" + '.png', dpi =500)
+            axis.set_title(str(pointcloud_files[34:-4]))
+            plt.savefig(str(self.save_path) + str(input_file) + "/" + str(pointcloud_files[34:-4]) + '.png', dpi=500)
+
 
     def check_valid(self, input_file):
         for img in os.listdir(self.true_path + input_file):
