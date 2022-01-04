@@ -59,7 +59,6 @@ class computer_vision_building(object):
             if ext.lower() not in self.valid_images:
                 continue
     
-
        
     def splitting_data_normalize(self):
 

@@ -6,16 +6,13 @@ class classification_with_model(object):
 
         self.model = keras.models.load_model("models/" + model)
         self.image_path = "traffic_signs" + "/Test"
-        
         self.number_classes = 43
         self.number_images_to_plot = 100
-
         self.prepare_image_data()
         self.plot_prediction_with_model()
 
         _, acc = self.model.evaluate(self.X_test, self.Y_test, verbose=1)
         print('Restored model, accuracy: {:5.2f}%'.format(100 * acc))
-
 
 
     def prepare_image_data(self):
