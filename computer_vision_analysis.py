@@ -10,11 +10,8 @@ if __name__ == "__main__":
         if sys.argv[1] == "model_training":
             computer_vision_analysis_obj = computer_vision_training(model_type = sys.argv[2])
         
-        if sys.argv[1] == "pointcloud_classification_with_model":
+        if sys.argv[1] == "pointcloud_prediction":
             computer_vision_analysis_obj = classification_with_model(model = sys.argv[2])
-
-        if sys.argv[1] == "imgae_prediction":
-            computer_vision_analysis_obj = prediction_with_model(model = sys.argv[2], pointcloud_path = sys.argv[3])
 
         if sys.argv[1] == "transfer_learning":
             computer_vision_analysis_obj = computer_vision_transfer_learning(currently_build_model = sys.argv[2])

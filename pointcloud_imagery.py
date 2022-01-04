@@ -17,7 +17,8 @@ class pointcloud_imagery(object):
         for i in range(0, self.number_classes):
             self.check_valid(self.category_names[i])
 
-        for i in range(0, self.number_classes):
+        for i in range(self.number_classes):
+            print(self.category_names[i])
             self.read_file_type(self.category_names[i])
 
 
