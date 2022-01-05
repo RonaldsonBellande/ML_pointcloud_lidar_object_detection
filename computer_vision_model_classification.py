@@ -3,18 +3,22 @@ from header_imports import *
 
 class classification_with_model(object):
     def __init__(self, model =  "model1_computer_vision_categories_10_model.h5"):
-
+        
+        self.pointcloud = []
+        self.label_name = []
+        self.number_of_points = 2048
         self.model = keras.models.load_model("models/" + model)
         self.path  = "PointCloud_data/"
         self.true_path = self.path + "Testing/"
-        self.number_classes = 10
         self.number_images_to_plot = 16
+        self.valid_images = [".off"]
+        self.labelencoder = LabelEncoder()
+        self.graph_charts = "graph_charts/" + "prediction_with_model_saved/"
+        self.model_categpory = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
+        
         self.setup_structure()
         self.splitting_data_normalize()
         self.plot_prediction_with_model()
-
-        _, accuracy = self.model.evaluate(self.X_test, self.Y_test, verbose=1)
-        print('Restored model, accuracy: {:5.2f}%'.format(100 * accuracy))
 
 
     def setup_structure(self):
@@ -22,8 +26,9 @@ class classification_with_model(object):
         self.category_names =  os.listdir(self.true_path)
         folder = next(os.walk(self.true_path))[1]
         self.number_classes = len(folder)
-
-        self.check_valid(self.category_names[0])
+        
+        for i in range(self.number_classes):
+            self.check_valid(self.category_names[i])
         
         for label in self.category_names:
             self.pointcloud_file = [self.true_path + label + '/' + i for i in os.listdir(self.true_path + '/' + label)]
@@ -47,9 +52,7 @@ class classification_with_model(object):
 
 
     def splitting_data_normalize(self):
-
         _, self.X_test, _, self.Y_test_vec = train_test_split(self.pointcloud, self.label_name, test_size = 1, random_state = 42)
-        self.Y_test = tf.keras.utils.to_categorical(self.Y_test_vec, self.number_classes)
         self.X_test = self.X_test.astype("float32") / 255
 
 
@@ -61,8 +64,8 @@ class classification_with_model(object):
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
             plt.axis('off')
-            plt.title("Predicted - {}".format(self.model_categories[predicted_classes[i]]),fontsize=1)
+            plt.title("Predicted - {}".format(self.model_categpory[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
             plt.tight_layout()
-            plt.savefig("graph_charts/" + "model_classification_detection_with_model_trained/"+ "_" + '_prediction' + str(self.number_classes) + '.png')
+            plt.savefig(self.graph_charts + "model_classification_detection_with_model_trained_prediction" + '.png')
 
         

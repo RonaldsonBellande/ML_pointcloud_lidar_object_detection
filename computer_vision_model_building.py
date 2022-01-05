@@ -35,7 +35,7 @@ class computer_vision_building(object):
         self.category_names =  os.listdir(self.true_path)
         folder = next(os.walk(self.true_path))[1]
         self.number_classes = len(folder)
-
+        print(self.category_names)
         for i in range(0, self.number_classes):
             self.check_valid(self.category_names[i])
         
