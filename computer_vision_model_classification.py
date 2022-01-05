@@ -52,15 +52,14 @@ class classification_with_model(object):
 
 
     def splitting_data_normalize(self):
-        _, self.X_test, _, self.Y_test_vec = train_test_split(self.pointcloud, self.label_name, test_size = 1, random_state = 42)
-        self.X_test = self.X_test.astype("float32") / 255
+        self.X_test = self.pointcloud.astype("float32") / 255
 
 
     def plot_prediction_with_model(self):
 
         plt.figure(dpi=500)
         predicted_classes = self.model.predict(self.X_test)
-
+        
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
             plt.axis('off')
