@@ -5,14 +5,12 @@ class classification_with_model(object):
     def __init__(self, model =  "model1_computer_vision_categories_10_model.h5"):
         
         self.pointcloud = []
-        self.label_name = []
         self.number_of_points = 2048
         self.model = keras.models.load_model("models/" + model)
         self.path  = "PointCloud_data/"
         self.true_path = self.path + "Testing/"
         self.number_images_to_plot = 16
         self.valid_images = [".off"]
-        self.labelencoder = LabelEncoder()
         self.graph_charts = "graph_charts/" + "prediction_with_model_saved/"
         self.model_categpory = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
         
@@ -36,12 +34,8 @@ class classification_with_model(object):
                 self.pointcloud.append(trimesh.load(point).sample(self.number_of_points))
                 self.label_name.append(label)
         
-        self.label_name = self.labelencoder.fit_transform(self.label_name)
         self.pointcloud = np.array(self.pointcloud)
         self.pointcloud =  self.pointcloud.reshape(self.pointcloud.shape[0], self.pointcloud.shape[1], self.pointcloud.shape[2], 1)
-        self.label_name = np.array(self.label_name)
-        self.label_name = tf.keras.utils.to_categorical(self.label_name , num_classes=self.number_classes)
-
 
     def check_valid(self, input_file):
 
