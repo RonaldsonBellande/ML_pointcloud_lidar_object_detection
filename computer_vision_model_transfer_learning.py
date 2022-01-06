@@ -143,7 +143,7 @@ class computer_vision_transfer_learning(object):
     
         self.model.add(Activation("relu"))
         self.model.add(Dropout(0.5))
-        self.model.add(Conv2D(32, (4, 4),strides = (1,1),padding="same"))
+        self.model.add(Conv2D(32, (4, 4),strides = (1,1), padding="same"))
         self.model.add(Activation("relu"))
         self.model.add(Dropout(0.25))
     
