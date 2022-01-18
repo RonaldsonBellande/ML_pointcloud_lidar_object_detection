@@ -32,7 +32,6 @@ class computer_vision_transfer_learning(object):
             self.create_model_4()
 
         self.model.load_weights("models/" + self.save_model)
-        
         self.param_grid = dict(batch_size = self.batch_size, epochs = self.epochs)
         self.callback_1 = TensorBoard(log_dir="logs/{}-{}".format(self.model_type, int(time.time())))
         self.callback_2 = ModelCheckpoint(filepath=self.model_path, save_weights_only=True, verbose=1)
