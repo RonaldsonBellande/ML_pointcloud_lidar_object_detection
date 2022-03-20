@@ -1,7 +1,7 @@
 from header_imports import *
 
 
-class computer_vision_transfer_learning(models):
+class transfer_learning(models):
     def __init__(self, save_model, model_type):
         
         self.pointcloud = []
