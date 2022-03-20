@@ -1,7 +1,7 @@
 from header_import import *
 
 
-class DeepQLearning(models):
+class deep_q_learning(models):
     def __init__(self, feature_size, dense_size=6, batch_size=200, exploration_decay = 0.95, algorithm_name="deep_q_learning", transfer_learning="true"):
         super().__init__()
 
@@ -53,20 +53,11 @@ class DeepQLearning(models):
         if self.algorithm_name != "deep_q_learning":
             self.update_target_model()
 
-    def create_model(self):
-
-        model = Sequential()
-        model.add(Dense(self.dense_size, input_shape=self.state_space, activation="relu"))
-        model.add(Dense(self.dense_size, activation="relu"))
-        model.add(Dense(self.action_space, activation="linear"))
-        model.compile(loss="mse", optimizer=self.optimizer, metrics=["accuracy"])
-        return model
 
     def update_replay_memory(self, transition):
         self.replay_memory.append(transition)
 
-    def get_q_values(self, state):
-        state = np.array((state).reshape(-1, *state.shape))
+    def get_q_values(self):
         return self.model.predict(state)[0]
 
     def update_target_model(self):
