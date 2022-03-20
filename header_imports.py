@@ -83,6 +83,7 @@ else:
     device_name = "/device:CPU:0"
     print("CPU")
 
+from all_models import *
 from computer_vision_model_building import *
 from computer_vision_model_training import *
 from computer_vision_model_classification import *

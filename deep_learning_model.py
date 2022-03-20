@@ -1,8 +1,8 @@
 from header_import import *
 
 
-class DeepQLearning(MountainCar3D):
-    def __init__ (self, state_space=(4,), action_space=5, dense_size=6, batch_size=200, algorithm_name="deep_q_learning", transfer_learning="true"):
+class DeepQLearning(models):
+    def __init__(self, feature_size, dense_size=6, batch_size=200, exploration_decay = 0.95, algorithm_name="deep_q_learning", transfer_learning="true"):
         super().__init__()
 
         self.delay_memory = 50000
@@ -12,6 +12,8 @@ class DeepQLearning(MountainCar3D):
         self.q_learning_models = None
         self.gamma = 0.95
         self.target_update = 5
+        self.exploration_decay = exploration_decay
+
         self.state_space = state_space
         self.action_space = action_space
         self.learning_rate = 0.001
@@ -19,7 +21,13 @@ class DeepQLearning(MountainCar3D):
         self.model_path = "models/" + self.algorithm_name + "_model.h5"
         self.optimizer = tf.keras.optimizers.Adam(lr=self.learning_rate, beta_1=0.9, beta_2=0.999)
         self.transfer_learning = transfer_learning
-        self.model = self.create_model()
+
+        if self.model_type == "model1":
+            self.model = self.create_models_1()
+        elif self.model_type == "model2":
+            self.model = self.create_models_2()
+        elif self.model_type == "model3":
+            self.model = self.create_model_3()
 
         if self.transfer_learning == "true":
             self.model.load_weights(self.model_path)
@@ -27,7 +35,13 @@ class DeepQLearning(MountainCar3D):
         self.X_train = []
         self.Y_train = []
 
-        self.target_model = self.create_model()
+        if self.model_type == "model1":
+            self.target_model = self.create_models_1()
+        elif self.model_type == "model2":
+            self.target_model = self.create_models_2()
+        elif self.model_type == "model3":
+            self.target_model = self.create_model_3()
+
         self.target_model.set_weights(self.model.get_weights())
         self.replay_memory = deque(maxlen = self.delay_memory)
 
