@@ -14,8 +14,6 @@ class deep_q_learning(models):
         self.target_update = 5
         self.exploration_decay = exploration_decay
 
-        self.state_space = state_space
-        self.action_space = action_space
         self.learning_rate = 0.001
         self.epochs = [1, 5, 15, 50, 100, 200]
         self.model_path = "models/" + self.algorithm_name + "_model.h5"

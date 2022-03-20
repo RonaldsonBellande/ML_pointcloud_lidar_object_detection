@@ -17,8 +17,6 @@ class continuous_learning(deep_q_learning, models, plot_graphs,):
         self.epsilon = 1
         self.delay_epsilon = 0.995
         self.min_epsilon = 0.001
-        self.state_size = (4,)
-        self.action_size = 5
         self.episode_rewards = []
         self.step_per_episode = []
 

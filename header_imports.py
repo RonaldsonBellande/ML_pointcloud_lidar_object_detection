@@ -89,4 +89,5 @@ from computer_vision_model_training import *
 from computer_vision_model_classification import *
 from computer_vision_model_transfer_learning import *
 from deep_learning_model import *
+from computer_vision_continuous_learning import * 
 from pointcloud_imagery import *
