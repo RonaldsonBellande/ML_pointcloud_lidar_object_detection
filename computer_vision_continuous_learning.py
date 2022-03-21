@@ -1,9 +1,8 @@
 from header_import import *
 
 
-class continuous_learning(deep_q_learning, classification_enviroment, plot_graphs):
+class continuous_learning(deep_q_learning, classification_enviroment, transfer_learning, plot_graphs):
     def __init__(self, episode, noise=0.0, reward_noise=0.0, random_start=False, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
-        super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning, image_number=, image_size=, data_set=, image_per_episode= )
         
         self.path = "graphs_charts/"
         self.enviroment_path = self.path + "enviroment_details/"
@@ -23,6 +22,11 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.valid_images = [".off"]
         self.labelencoder = LabelEncoder()
 
+        self.image_per_episode = 1
+        self.image_size = 240
+        self.data_set = 
+        self.
+        
         self.train_initial_model = "false"
         self.algorithm_name = algorithm_name
         self.transfer_learning = transfer_learning
@@ -33,6 +37,46 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.min_epsilon = 0.001
         self.episode_rewards = []
         self.step_per_episode = []
+
+
+        super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning, image_number=, image_size=, data_set=, image_per_episode=)
+
+    def setup_structure(self):
+
+        self.category_names =  os.listdir(self.true_path)
+        self.number_classes = len(next(os.walk(self.true_path))[1])
+        
+        for i in range(self.number_classes):
+            self.check_valid(self.category_names[i])
+        
+        for label in self.category_names:
+            self.pointcloud_file = [self.true_path + label + '/' + i for i in os.listdir(self.true_path + '/' + label)]
+            for point in self.pointcloud_file:
+                self.pointcloud.append(trimesh.load(point).sample(self.number_of_points))
+                self.label_name.append(label)
+        
+        self.label_name = self.labelencoder.fit_transform(self.label_name)
+        self.pointcloud = np.array(self.pointcloud)
+        self.pointcloud =  self.pointcloud.reshape(self.pointcloud.shape[0], self.pointcloud.shape[1], self.pointcloud.shape[2], 1)
+        self.label_name = np.array(self.label_name)
+        self.label_name = tf.keras.utils.to_categorical(self.label_name , num_classes=self.number_classes)
+
+
+    def check_valid(self, input_file):
+
+        for img in os.listdir(self.true_path + input_file):
+            ext = os.path.splitext(img)[1]
+            if ext.lower() not in self.valid_images:
+                continue
+
+    def splitting_data_normalize(self):
+        
+        self.X_train, self.X_test, self.Y_train_vec, self.Y_test_vec = train_test_split(self.pointcloud, self.label_name, test_size = 0.10, random_state = 42)
+        self.input_shape = self.X_train.shape[1:]
+        self.Y_train = tf.keras.utils.to_categorical(self.Y_train_vec, self.number_classes)
+        self.Y_test = tf.keras.utils.to_categorical(self.Y_test_vec, self.number_classes)
+        self.X_train = self.X_train.astype("float32") / 255
+        self.X_test = self.X_test.astype("float32") / 2
 
 
     def policy(self, state):
