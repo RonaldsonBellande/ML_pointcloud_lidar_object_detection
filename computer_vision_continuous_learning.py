@@ -1,7 +1,7 @@
 from header_import import *
 
 
-class continuous_learning(deep_q_learning, models, plot_graphs,):
+class continuous_learning(deep_q_learning, models, classification_enviroment, plot_graphs):
     def __init__(self, episode, noise=0.0, reward_noise=0.0, random_start=False, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
         super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning)
         
