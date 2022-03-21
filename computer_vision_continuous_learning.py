@@ -3,12 +3,26 @@ from header_import import *
 
 class continuous_learning(deep_q_learning, models, classification_enviroment, plot_graphs):
     def __init__(self, episode, noise=0.0, reward_noise=0.0, random_start=False, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
-        super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning)
+        super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning, image_number=, image_size=, data_set=, image_per_episode= )
         
         self.path = "graphs_charts/"
         self.enviroment_path = self.path + "enviroment_details/"
         self.model_detail_path = self.path + "model_details/"
         
+        self.pointcloud = []
+        self.label_name = []
+        self.save_model = save_model
+        self.model_type = model_type
+        self.batch_size = [10, 20, 40, 60, 80, 100]
+        self.epochs = [1, 5, 15, 50, 100, 200]
+        self.number_of_points = 2048
+        self.model_path = "models/transfer_learning/" 
+        self.path  = "PointCloud_data/"
+        self.true_path = self.path + "PointCloud/"
+        self.number_images_to_plot = 16
+        self.valid_images = [".off"]
+        self.labelencoder = LabelEncoder()
+
         self.train_initial_model = "false"
         self.algorithm_name = algorithm_name
         self.transfer_learning = transfer_learning
