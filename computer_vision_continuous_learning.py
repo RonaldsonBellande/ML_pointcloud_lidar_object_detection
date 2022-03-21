@@ -1,13 +1,14 @@
 from header_import import *
 
 
-class continuous_learning(deep_q_learning, classification_enviroment, transfer_learning, plot_graphs):
+class continuous_learning(deep_q_learning, classification_enviroment, plot_graphs):
     def __init__(self, episode, noise=0.0, reward_noise=0.0, random_start=False, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
         
         self.path = "graphs_charts/"
         self.enviroment_path = self.path + "enviroment_details/"
         self.model_detail_path = self.path + "model_details/"
         
+
         self.pointcloud = []
         self.label_name = []
         self.save_model = save_model
@@ -21,11 +22,13 @@ class continuous_learning(deep_q_learning, classification_enviroment, transfer_l
         self.number_images_to_plot = 16
         self.valid_images = [".off"]
         self.labelencoder = LabelEncoder()
+        self.graph_path = "graph_charts/" + "continuous_learning_with_models/"
+        
+        self.setup_structure()
+        self.splitting_data_normalize()
 
         self.image_per_episode = 1
         self.image_size = 240
-        self.data_set = 
-        self.
         
         self.train_initial_model = "false"
         self.algorithm_name = algorithm_name
@@ -38,8 +41,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, transfer_l
         self.episode_rewards = []
         self.step_per_episode = []
 
-
-        super().__init__(algorithm_name=algorithm_name, transfer_learning=transfer_learning, image_number=, image_size=, data_set=, image_per_episode=)
+        super().__init__(algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning, image_number=self.image_size, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
 
     def setup_structure(self):
 
@@ -95,15 +97,14 @@ class continuous_learning(deep_q_learning, classification_enviroment, transfer_l
     
         for episode in tqdm(range(1, self.episode+1), desc="episode"):
             step = 0
-            state = self.reset()
-            self.reach_goal = False
+            state, done = self.reset(), False
             episode_reward = 0
 
-            while not self.reach_goal and step <= self.step_limit:
+            while step <= self.step_limit or done:
                 action = self.policy(state)
-                action, reward, next_state, self.reach_goal = self.step(action)
+                action, reward, next_state, done= self.step(action)
                 episode_reward += reward
-                self.update_replay_memory((state, action, reward, next_state, self.reach_goal))
+                self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
                 self.memory_delay()
                 step += 1
@@ -123,15 +124,14 @@ class continuous_learning(deep_q_learning, classification_enviroment, transfer_l
 
         for episode in tqdm(range(1, self.episode+1), desc="episode"):
             step = 0
-            state = self.reset()
-            self.reach_goal = False
+            state, done = self.reset(), False
             episode_reward = 0
 
-            while not self.reach_goal and step <= self.step_limit:
+            while step <= self.step_limit or done:
                 action = self.policy(state)
-                action, reward, next_state, self.reach_goal = self.step(action)
+                action, reward, next_state, done= self.step(action)
                 episode_reward += reward
-                self.update_replay_memory((state, action, reward, next_state, self.reach_goal))
+                self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
                 self.target_model_update()
                 self.memory_delay()
@@ -151,15 +151,14 @@ class continuous_learning(deep_q_learning, classification_enviroment, transfer_l
 
         for episode in tqdm(range(1, self.episode+1), desc="episode"):
             step = 0
-            state = self.reset()
-            self.reach_goal = False
+            state, done = self.reset(), False
             episode_reward = 0
 
-            while not self.reach_goal and step <= self.step_limit:
+            while step <= self.step_limit or done:
                 action = self.policy(state)
-                action, reward, next_state, self.reach_goal = self.step(action)
+                action, reward, next_state, done= self.step(action)
                 episode_reward += reward
-                self.update_replay_memory((state, action, reward, next_state, self.reach_goal))
+                self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
                 self.target_model_update()
                 self.memory_delay()

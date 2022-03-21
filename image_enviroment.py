@@ -2,9 +2,9 @@ from header_import import *
 
 
 class classification_enviroment(gym.Env):
-    def __init__(self, image_number, image_size, data_set, image_per_episode = 1):
+    def __init__(self, number_classes, image_size, data_set, image_per_episode = 1):
 
-        self.image_number = image_number
+        self.number_classes = number_classes
         self.image_size = image_size
         self.images_per_episode = image_per_episode
         self.step_count = 0
@@ -34,6 +34,7 @@ class classification_enviroment(gym.Env):
         state_space = self.X[next_state_idx]
 
         return state_space
+
 
     def reset(self):
         
