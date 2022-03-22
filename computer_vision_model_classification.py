@@ -13,7 +13,7 @@ class classification_with_model(object):
         self.number_images_to_plot = 16
         self.valid_images = [".off"]
         self.graph_path = "graph_charts/" + "prediction_with_model_saved/"
-        self.model_categpory = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
+        self.model_category = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
         
         self.setup_structure()
         self.plot_prediction_with_model()
@@ -54,7 +54,7 @@ class classification_with_model(object):
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
             plt.axis('off')
-            plt.title("Predicted - {}".format(self.model_categpory[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
+            plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
             plt.tight_layout()
             plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction" + str(self.save_model) + '.png')
 

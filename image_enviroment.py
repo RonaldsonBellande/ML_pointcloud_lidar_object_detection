@@ -19,6 +19,8 @@ class classification_enviroment(gym.Env):
     def step(self, action):
         
         done = False
+        print(action[1])
+        print(self.expected_action)
         reward = int(action == self.expected_action)
         next_state = self.state()
 
@@ -32,14 +34,13 @@ class classification_enviroment(gym.Env):
     def state(self):
         
         next_state_idx = random.randint(0, self.X.shape[2] - 1)
-        # print(self.Y.shape)
-        # print(self.Y)
-        self.expected_action = int(self.Y[next_state_idx])
+        # print(next_state_idx)
+        self.expected_action = int(self.Y[0][next_state_idx])
         state_space = self.X[next_state_idx]
 
-        print(next_state_idx)
-        print(self.expected_action)
-        print(state_space)
+        # print(next_state_idx)
+        # print(self.expected_action)
+        # print(state_space)
 
         return state_space
 
