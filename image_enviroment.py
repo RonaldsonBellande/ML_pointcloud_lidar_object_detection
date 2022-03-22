@@ -10,6 +10,8 @@ class classification_enviroment(gym.Env):
         self.step_count = 0
 
         self.X, self.Y = data_set[0], data_set[1]
+
+        # self.Y = [j for sub in self.Y for j in sub]
         self.action_space = spaces.Discrete(self.number_classes)
         self.state_space = spaces.Box(low=0, high=1, shape=(self.X.shape[1], self.X.shape[2], 1), dtype=np.float32)
 
@@ -29,9 +31,15 @@ class classification_enviroment(gym.Env):
 
     def state(self):
         
-        next_state_idx = random.randint(0, len(self.X) - 1)
+        next_state_idx = random.randint(0, self.X.shape[2] - 1)
+        # print(self.Y.shape)
+        # print(self.Y)
         self.expected_action = int(self.Y[next_state_idx])
         state_space = self.X[next_state_idx]
+
+        print(next_state_idx)
+        print(self.expected_action)
+        print(state_space)
 
         return state_space
 
