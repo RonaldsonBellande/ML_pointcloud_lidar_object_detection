@@ -11,7 +11,6 @@ class classification_enviroment(gym.Env):
 
         self.X, self.Y = data_set[0], data_set[1]
         self.action_space = spaces.Discrete(self.number_classes)
-        print(self.X.shape[1])
         self.state_space = spaces.Box(low=0, high=1, shape=(self.X.shape[1], self.X.shape[2], 1), dtype=np.float32)
 
 
@@ -43,11 +42,5 @@ class classification_enviroment(gym.Env):
         next_state = self.state()
 
         return next_state
-
-
-        
-
-
-
 
 

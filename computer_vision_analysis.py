@@ -47,6 +47,8 @@ if __name__ == "__main__":
                 input_model = "model3_computer_vision_categories_10_model.h5"
 
             computer_vision_analysis_obj = continuous_learning(save_model=input_model, model_type=sys.argv[3], episode=10, algorithm_name="double_deep_q_learning", transfer_learning="true")
+            computer_vision_analysis_obj.deep_q_learning()
+
 
 
         if sys.argv[1] == "segmentation":
