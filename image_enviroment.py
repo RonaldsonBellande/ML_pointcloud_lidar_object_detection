@@ -9,9 +9,10 @@ class classification_enviroment(gym.Env):
         self.images_per_episode = image_per_episode
         self.step_count = 0
 
-        self.X, self.Y = data_set
+        self.X, self.Y = data_set[0], data_set[1]
         self.action_space = spaces.Discrete(self.number_classes)
-        self.state_space = spaces.Box(low=0, high=1, shape=(int(self.X[1]), int(self.X[2]), 1), dtype=np.float32)
+        print(self.X.shape[1])
+        self.state_space = spaces.Box(low=0, high=1, shape=(self.X.shape[1], self.X.shape[2], 1), dtype=np.float32)
 
 
     def step(self, action):
