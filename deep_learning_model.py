@@ -2,8 +2,7 @@ from header_imports import *
 
 
 class deep_q_learning(models):
-    def __init__(self, save_model, model_type, feature_size, dense_size=6, batch_size=200, exploration_decay = 0.95, algorithm_name="deep_q_learning", transfer_learning="true"):
-        super().__init__()
+    def __init__(self, save_model, model_type, dense_size, batch_size, exploration_decay, algorithm_name, transfer_learning):
 
         self.delay_memory = 50000
         self.batch = batch_size
@@ -58,12 +57,15 @@ class deep_q_learning(models):
     def update_replay_memory(self, transition):
         self.replay_memory.append(transition)
 
+
     def get_q_values(self):
         return self.model.predict(state)[0]
+
 
     def update_target_model(self):
         self.target_model.set_weights(self.model.get_weights())
    
+
     def memory_delay(self):
         
         if self.transfer_learning == "true":
@@ -76,7 +78,8 @@ class deep_q_learning(models):
                 self.train_double_deep_q_learning()
             elif self.algorithm_name == "dueling_deep_q_learning":
                 self.train_dueling_deep_q_learning()
-    
+   
+
     def target_model_update(self):
         if self.reach_goal:
             self.target_update_counter += 1

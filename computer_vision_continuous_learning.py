@@ -7,9 +7,12 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.path = "graphs_charts/"
         self.enviroment_path = self.path + "enviroment_details/"
         self.model_detail_path = self.path + "model_details/"
+
         self.save_model = save_model
         self.model_type = model_type
         
+        self.dense_size = 6
+        self.exploration_decay = 0.95
         self.pointcloud = []
         self.label_name = []
         self.save_model = save_model
@@ -41,8 +44,8 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.episode_rewards = []
         self.step_per_episode = []
 
-        super().__init__(save_model=self.save_model, model_type=self.model_type, algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning, image_number=self.number_classes, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
-
+        deep_q_learning.__init__(self, save_model=self.save_model, model_type=self.model_type, dense_size=self.dense_size, batch_size=self.batch_size[3], exploration_decay=self.exploration_decay, algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning)
+        classification_enviroment.__init__(self, number_classes=self.number_classes, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
 
     def setup_structure(self):
 
@@ -79,7 +82,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.Y_train = tf.keras.utils.to_categorical(self.Y_train_vec, self.number_classes)
         self.Y_test = tf.keras.utils.to_categorical(self.Y_test_vec, self.number_classes)
         self.X_train = self.X_train.astype("float32") / 255
-        self.X_test = self.X_test.astype("float32") / 2
+        self.X_test = self.X_test.astype("float32") / 255
 
 
     def deep_q_learning(self):

@@ -56,10 +56,13 @@ from keras.datasets import cifar10
 import keras.backend as K
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPooling2D, Dropout, Activation, LSTM
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPooling2D, Dropout, Activation, Input
+from tensorflow.keras.models import Model
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping, TensorBoard, ModelCheckpoint
 from tensorflow.keras.utils import to_categorical
+from keras.models import load_model
 import matplotlib.image as img
+from collections import deque
 
 import gym
 from gym import error, spaces, utils
