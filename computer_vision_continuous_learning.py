@@ -1,14 +1,15 @@
-from header_import import *
+from header_imports import *
 
 
 class continuous_learning(deep_q_learning, classification_enviroment, plot_graphs):
-    def __init__(self, episode, noise=0.0, reward_noise=0.0, random_start=False, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
+    def __init__(self, save_model, model_type, episode, noise=0.0, reward_noise=0.0, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
         
         self.path = "graphs_charts/"
         self.enviroment_path = self.path + "enviroment_details/"
         self.model_detail_path = self.path + "model_details/"
+        self.save_model = save_model
+        self.model_type = model_type
         
-
         self.pointcloud = []
         self.label_name = []
         self.save_model = save_model
@@ -29,7 +30,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
 
         self.image_per_episode = 1
         self.image_size = 240
-        
         self.train_initial_model = "false"
         self.algorithm_name = algorithm_name
         self.transfer_learning = transfer_learning
@@ -41,7 +41,8 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.episode_rewards = []
         self.step_per_episode = []
 
-        super().__init__(algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning, image_number=self.image_size, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
+        super().__init__(save_model=self.save_model, model_type=self.model_type, algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning, image_number=self.number_classes, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
+
 
     def setup_structure(self):
 
@@ -81,18 +82,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.X_test = self.X_test.astype("float32") / 2
 
 
-    def policy(self, state):
-        if np.random.random() > self.epsilon:
-            return np.argmax(self.get_q_values(state))
-        else:
-            return np.random.randint(0, self.action_size)
-
-
-    def epsilon_reduction(self):
-        if self.epsilon > self.min_epsilon:
-            self.epsilon *= self.delay_epsilon
-
-
     def deep_q_learning(self):
     
         for episode in tqdm(range(1, self.episode+1), desc="episode"):
@@ -101,8 +90,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             episode_reward = 0
 
             while step <= self.step_limit or done:
-                action = self.policy(state)
-                action, reward, next_state, done= self.step(action)
+                action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
@@ -110,7 +98,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
                 step += 1
             
             self.train_initial_model = "true"
-            self.epsilon_reduction()
             self.step_per_episode.append(step)
             self.episode_rewards.append(episode_reward)
 
@@ -128,8 +115,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             episode_reward = 0
 
             while step <= self.step_limit or done:
-                action = self.policy(state)
-                action, reward, next_state, done= self.step(action)
+                action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
@@ -138,7 +124,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
                 step += 1
                 
             self.train_initial_model = "true"
-            self.epsilon_reduction()
             self.step_per_episode.append(step)
             self.episode_rewards.append(episode_reward)
 
@@ -155,8 +140,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             episode_reward = 0
 
             while step <= self.step_limit or done:
-                action = self.policy(state)
-                action, reward, next_state, done= self.step(action)
+                action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
                 state = next_state
@@ -165,7 +149,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
                 step += 1
 
             self.train_initial_model = "true"
-            self.epsilon_reduction()
             self.step_per_episode.append(step)
             self.episode_rewards.append(episode_reward)
 

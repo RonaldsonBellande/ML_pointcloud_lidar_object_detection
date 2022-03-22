@@ -86,6 +86,7 @@ else:
     device_name = "/device:CPU:0"
     print("CPU")
 
+
 from all_models import *
 from plot_and_animation import *
 from computer_vision_model_building import *
@@ -93,6 +94,6 @@ from computer_vision_model_training import *
 from computer_vision_model_classification import *
 from computer_vision_model_transfer_learning import *
 from deep_learning_model import *
-from computer_vision_continuous_learning import *
 from image_enviroment import *
+from computer_vision_continuous_learning import *
 from pointcloud_imagery import *
