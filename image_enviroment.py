@@ -11,7 +11,6 @@ class classification_enviroment(gym.Env):
 
         self.X, self.Y = data_set[0], data_set[1]
 
-        # self.Y = [j for sub in self.Y for j in sub]
         self.action_space = spaces.Discrete(self.number_classes)
         self.state_space = spaces.Box(low=0, high=1, shape=(self.X.shape[1], self.X.shape[2], 1), dtype=np.float32)
 
@@ -19,8 +18,7 @@ class classification_enviroment(gym.Env):
     def step(self, action):
         
         done = False
-        print(action[1])
-        print(self.expected_action)
+        action = (np.argmax(action.numpy()))
         reward = int(action == self.expected_action)
         next_state = self.state()
 
@@ -33,15 +31,11 @@ class classification_enviroment(gym.Env):
 
     def state(self):
         
-        next_state_idx = random.randint(0, self.X.shape[2] - 1)
-        # print(next_state_idx)
+        next_state_idx = random.randint(0, self.number_classes - 1)
+        # Check This Out
         self.expected_action = int(self.Y[0][next_state_idx])
         state_space = self.X[next_state_idx]
-
-        # print(next_state_idx)
-        # print(self.expected_action)
-        # print(state_space)
-
+        
         return state_space
 
 

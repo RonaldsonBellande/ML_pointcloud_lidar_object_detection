@@ -105,6 +105,7 @@ class deep_q_learning(models):
                 state_value = reward + self.gamma *  np.max(self.model.predict(next_states_array)[index])
         
             q_value =  self.model.predict(states_array)[index]
+            print(q_value)
             q_value[action] = state_value
 
             X.append(state)
@@ -118,7 +119,7 @@ class deep_q_learning(models):
             verbose=0, 
             epochs=self.epochs[0], 
             shuffle=False, 
-            callbacks=[self.callback_1, self.callback_2, self.callback_3] if self.reach_goal else None)
+            callbacks=[self.callback_1, self.callback_2, self.callback_3] if done else None)
 
         self.transfer_learning = self.train_initial_model
 
@@ -152,7 +153,7 @@ class deep_q_learning(models):
             verbose=0, 
             epochs=self.epochs[0], 
             shuffle=False, 
-            callbacks=[self.callback_1, self.callback_2, self.callback_3] if self.reach_goal else None)
+            callbacks=[self.callback_1, self.callback_2, self.callback_3] if done else None)
 
         self.transfer_learning = self.train_initial_model
 
@@ -187,7 +188,7 @@ class deep_q_learning(models):
             verbose=0, 
             epochs=self.epochs[0], 
             shuffle=False, 
-            callbacks=[self.callback_1, self.callback_2, self.callback_3] if self.reach_goal else None)
+            callbacks=[self.callback_1, self.callback_2, self.callback_3] if done else None)
 
         self.transfer_learning = self.train_initial_model
 

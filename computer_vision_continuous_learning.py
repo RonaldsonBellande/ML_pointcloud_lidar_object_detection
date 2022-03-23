@@ -135,6 +135,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.plot_episode_time_step(self.step_per_episode, type_graph = "step_number")
         self.plot_model()
 
+
     def dueling_deep_q_learning(self):
 
         for episode in tqdm(range(1, self.episode+1), desc="episode"):
