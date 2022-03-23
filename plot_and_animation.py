@@ -3,8 +3,11 @@ from header_imports import *
 
 class plot_graphs(object):
     def __init__(self):
-        pass
-
+        self.true_path = self.path + "Testing/"
+        self.number_images_to_plot = 16
+        self.graph_path = "graph_charts/" + "prediction_with_continuous_learning_model_saved/"
+        self.model_category = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
+        
 
     def plot_episode_time_step(self, data, type_graph):
 
@@ -42,4 +45,19 @@ class plot_graphs(object):
         plt.legend(['train', 'Validation'], loc='upper left')
         plt.savefig(self.model_detail_path + self.algorithm_name + '_lost'+'.png', dpi =500)
         plt.clf()
+
+
+    def plot_prediction_with_model(self):
+
+        plt.figure(dpi=500)
+        predicted_classes = self.model.predict(self.X_test)
+        
+        for i in range(self.number_images_to_plot):
+            plt.subplot(4,4,i+1)
+            plt.axis('off')
+            plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
+            plt.tight_layout()
+            plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction_continuous_learning" + str(self.save_model) + '.png')
+
+
 

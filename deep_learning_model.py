@@ -2,7 +2,7 @@ from header_imports import *
 
 
 class deep_q_learning(models):
-    def __init__(self, save_model, model_type, dense_size, batch_size, exploration_decay, algorithm_name, transfer_learning):
+    def __init__(self, saved_model, model_type, dense_size, batch_size, exploration_decay, algorithm_name, transfer_learning):
 
         self.delay_memory = 50000
         self.batch = batch_size
@@ -13,13 +13,12 @@ class deep_q_learning(models):
         self.target_update = 5
         self.exploration_decay = exploration_decay
 
-        self.save_model = save_model
+        self.saved_model = saved_model
         self.model_type = model_type
-
         self.learning_rate = 0.001
         self.epochs = [1, 5, 15, 50, 100, 200]
-        self.model_path = "models/" + "transfer_learning/" + self.save_model
-        self.model_save_path =  "models/" + "continuous_learning/" + self.save_model
+        self.model_path = "models/" + "transfer_learning/" + self.saved_model
+        self.model_save_path =  "models/" + "continuous_learning/" + self.saved_model
         self.optimizer = tf.keras.optimizers.Adam(lr=self.learning_rate, beta_1=0.9, beta_2=0.999)
         self.transfer_learning = transfer_learning
 
