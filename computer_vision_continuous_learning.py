@@ -37,7 +37,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.algorithm_name = algorithm_name
         self.transfer_learning = transfer_learning
         self.episode = episode
-        self.step_limit = 500
+        self.step_limit = 10
         self.epsilon = 1
         self.delay_epsilon = 0.995
         self.min_epsilon = 0.001
@@ -46,6 +46,13 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
 
         deep_q_learning.__init__(self, save_model=self.save_model, model_type=self.model_type, dense_size=self.dense_size, batch_size=self.batch_size[3], exploration_decay=self.exploration_decay, algorithm_name=self.algorithm_name, transfer_learning=self.transfer_learning)
         classification_enviroment.__init__(self, number_classes=self.number_classes, image_size=self.image_size, data_set=(self.pointcloud, self.label_name), image_per_episode=self.image_per_episode)
+
+        if self.algorithm_name == "deep_q_learning":
+            self.deep_q_learning()
+        elif self.algorithm_name == "double_deep_q_learning":
+            self.double_deep_q_learning()
+        elif self.algorithm_name == "dueling_deep_q_learning":
+            self.dueling_deep_q_learning()
 
     def setup_structure(self):
 

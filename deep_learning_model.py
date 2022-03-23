@@ -18,7 +18,8 @@ class deep_q_learning(models):
 
         self.learning_rate = 0.001
         self.epochs = [1, 5, 15, 50, 100, 200]
-        self.model_path = "models/" + "transfer_learning/" + self.save_model 
+        self.model_path = "models/" + "transfer_learning/" + self.save_model
+        self.model_save_path =  "models/" + "continuous_learning/" + self.save_model
         self.optimizer = tf.keras.optimizers.Adam(lr=self.learning_rate, beta_1=0.9, beta_2=0.999)
         self.transfer_learning = transfer_learning
 
@@ -46,7 +47,7 @@ class deep_q_learning(models):
         self.replay_memory = deque(maxlen = self.delay_memory)
 
         self.callback_1 = TensorBoard(log_dir="logs/{}-{}".format(self.algorithm_name, int(time.time())))
-        self.callback_2 = ModelCheckpoint(filepath=self.model_path, save_weights_only=True, verbose=1)
+        self.callback_2 = ModelCheckpoint(filepath=self.model_save_path, save_weights_only=True, verbose=1)
         self.callback_3 = ReduceLROnPlateau(monitor='accuracy', patience=2, verbose=1, factor= 0.5, min_lr=0.00001)
         self.target_update_counter = 0.001
         
@@ -104,12 +105,11 @@ class deep_q_learning(models):
             else:
                 state_value = reward + self.gamma *  np.max(self.model.predict(next_states_array)[index])
         
-            q_value =  self.model.predict(states_array)[index]
-            print(q_value)
-            q_value[action] = state_value
+            state_value_action =  self.model.predict(states_array)[index]
+            state_value_action[action] = state_value
 
             X.append(state)
-            Y.append(q_value)
+            Y.append(state_value_action)
 
         self.X_train.extend(X)
         self.Y_train.extend(Y)
@@ -139,11 +139,11 @@ class deep_q_learning(models):
             else:
                 state_value = reward + self.gamma *  np.max(self.target_model.predict(next_states_array)[index])
         
-            q_value =  self.model.predict(states_array)[index]
-            q_value[action] = state_value
+            state_value_action =  self.model.predict(states_array)[index]
+            state_value_action[action] = state_value
 
             X.append(state)
-            Y.append(q_value)
+            Y.append(state_value_action)
         
         self.X_train.extend(X)
         self.Y_train.extend(Y)
@@ -173,11 +173,11 @@ class deep_q_learning(models):
             else:
                 state_value = reward + self.gamma *  np.max(self.target_model.predict(new_current_states)[index])
         
-            current_q_value =  self.model.predict(current_states)[index]
-            current_q_value[action] = state_value
+            state_value_action =  self.model.predict(states_array)[index]
+            state_value_action[action] = state_value
 
             X.append(state)
-            Y.append(current_q_value)
+            Y.append(state_value_action)
        
 
         self.X_train.extend(X)
@@ -194,4 +194,4 @@ class deep_q_learning(models):
 
 
     def save_model(self):
-        self.model.save(self.model_path)
+        self.model.save(self.model_save_path)

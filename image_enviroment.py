@@ -18,7 +18,7 @@ class classification_enviroment(gym.Env):
     def step(self, action):
         
         done = False
-        action = (np.argmax(action.numpy()))
+        action = np.argmax(action.numpy())
         reward = int(action == self.expected_action)
         next_state = self.state()
 
@@ -31,9 +31,8 @@ class classification_enviroment(gym.Env):
 
     def state(self):
         
-        next_state_idx = random.randint(0, self.number_classes - 1)
-        # Check This Out
-        self.expected_action = int(self.Y[0][next_state_idx])
+        next_state_idx = random.randint(0, len(self.X) - 1)
+        self.expected_action = np.argmax(self.Y[next_state_idx])
         state_space = self.X[next_state_idx]
         
         return state_space
