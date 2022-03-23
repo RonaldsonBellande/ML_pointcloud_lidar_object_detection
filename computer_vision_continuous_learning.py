@@ -8,7 +8,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.algorithm_details = self.algorithm_details_path + "algorithm_details/"
         self.model_detail = self.algorithm_details_path + "model_details/"
         self.graph_path = self.algorithm_details_path + "continuous_learning_with_models/"
-
         self.model_category = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
         
         self.dense_size = 10
@@ -30,7 +29,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.setup_structure()
         self.splitting_data_normalize()
 
-        self.image_per_episode = len(self.pointcloud)
+        self.image_per_episode = int(math.sqrt(len(self.pointcloud)))
         self.train_initial_model = "false"
         self.algorithm_name = algorithm_name
         self.transfer_learning = transfer_learning
@@ -101,7 +100,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             state, done = self.reset(), False
             episode_reward = 0
 
-            for i in tqdm(range(1, self.episode+1), desc="image_per_episode"):
+            for i in tqdm(range(1, self.image_per_episode), desc="image_per_episode"):
                 action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
@@ -127,7 +126,7 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             state, done = self.reset(), False
             episode_reward = 0
 
-            while not done:
+            for i in tqdm(range(1, self.image_per_episode), desc="image_per_episode"):
                 action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
@@ -153,8 +152,8 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
             step = 0
             state, done = self.reset(), False
             episode_reward = 0
-
-            while not done:
+            
+            for i in tqdm(range(1, self.image_per_episode), desc="image_per_episode"):
                 action, reward, next_state, done = self.step(self.model(state[None])[0])
                 episode_reward += reward
                 self.update_replay_memory((state, action, reward, next_state, done))
