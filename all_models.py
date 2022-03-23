@@ -39,28 +39,28 @@ class models(object):
 
     def create_model_3(self):
 
-        model = Sequential()
+        self.initial_model = Sequential()
         self.MyConv(first = True)
         self.MyConv()
         self.MyConv()
         self.MyConv()
-        model.add(Flatten())
-        model.add(Dense(units = self.number_classes, activation = "softmax", input_dim=2))
-        model.compile(loss = "binary_crossentropy", optimizer ="adam", metrics= ["accuracy"])
+        self.initial_model.add(Flatten())
+        self.initial_model.add(Dense(units = self.number_classes, activation = "softmax", input_dim=2))
+        self.initial_model.compile(loss = "binary_crossentropy", optimizer ="adam", metrics= ["accuracy"])
         
-        return model
+        return self.initial_model
         
 
     def MyConv(self, first = False):
         if first == False:
-            model.add(Conv2D(64, (4, 4),strides = (1,1), padding="same", input_shape = self.input_shape))
+            self.initial_model.add(Conv2D(64, (4, 4),strides = (1,1), padding="same", input_shape = self.input_shape))
         else:
-            model.add(Conv2D(64, (4, 4),strides = (1,1), padding="same", input_shape = self.input_shape))
+            self.initial_model.add(Conv2D(64, (4, 4),strides = (1,1), padding="same", input_shape = self.input_shape))
     
-        model.add(Activation("relu"))
-        model.add(Dropout(0.5))
-        model.add(Conv2D(32, (4, 4),strides = (1,1),padding="same"))
-        model.add(Activation("relu"))
-        model.add(Dropout(0.25))
+        self.initial_model.add(Activation("relu"))
+        self.initial_model.add(Dropout(0.5))
+        self.initial_model.add(Conv2D(32, (4, 4),strides = (1,1),padding="same"))
+        self.initial_model.add(Activation("relu"))
+        self.initial_model.add(Dropout(0.25))
 
 

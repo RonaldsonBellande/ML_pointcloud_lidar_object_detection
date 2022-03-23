@@ -2,11 +2,11 @@ from header_imports import *
 
 
 class transfer_learning(models):
-    def __init__(self, save_model, model_type):
+    def __init__(self, saved_model, model_type):
         
         self.pointcloud = []
         self.label_name = []
-        self.save_model = save_model
+        self.saved_model = saved_model
         self.model_type = model_type
         self.batch_size = [10, 20, 40, 60, 80, 100]
         self.epochs = [1, 5, 15, 50, 100, 200]
@@ -29,7 +29,7 @@ class transfer_learning(models):
         elif self.model_type == "model3":
             self.model = self.create_model_3()
 
-        self.model.load_weights("models/" + self.save_model)
+        self.model.load_weights("models/" + self.saved_model)
         self.param_grid = dict(batch_size = self.batch_size, epochs = self.epochs)
         self.callback_1 = TensorBoard(log_dir="logs/{}-{}".format(self.model_type, int(time.time())))
         self.callback_2 = ModelCheckpoint(filepath=self.model_path, save_weights_only=True, verbose=1)

@@ -2,12 +2,12 @@ from header_imports import *
 
 
 class classification_with_model(object):
-    def __init__(self, save_model):
+    def __init__(self, saved_model):
         
         self.pointcloud = []
         self.number_of_points = 2048
-        self.save_model = save_model
-        self.model = keras.models.load_model("models/" + self.save_model)
+        self.saved_model = saved_model
+        self.model = keras.models.load_model("models/" + self.saved_model)
         self.path  = "PointCloud_data/"
         self.true_path = self.path + "Testing/"
         self.number_images_to_plot = 16
@@ -56,6 +56,6 @@ class classification_with_model(object):
             plt.axis('off')
             plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
             plt.tight_layout()
-            plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction" + str(self.save_model) + '.png')
+            plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction" + str(self.saved_model) + '.png')
 
         

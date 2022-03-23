@@ -3,10 +3,9 @@ from header_imports import *
 
 class plot_graphs(object):
     def __init__(self):
+
         self.true_path = self.path + "Testing/"
         self.number_images_to_plot = 16
-        self.graph_path = "graph_charts/" + "prediction_with_continuous_learning_model_saved/"
-        self.model_category = ['toilet', 'monitor', 'dresser', 'sofa', 'table', 'night_stand', 'chair', 'bathtub', 'bed', 'desk']
         
 
     def plot_episode_time_step(self, data, type_graph):
@@ -25,7 +24,7 @@ class plot_graphs(object):
             axis.set_title("Number of steps per episode vs. Episode")
             axis.set_xlabel("Episode")
             axis.set_ylabel("step per episode")
-        plt.savefig(self.enviroment_path + self.algorithm_name + "_" + type_graph + ".png", dpi =500)
+        plt.savefig(self.algorithm_details + self.algorithm_name  + "_" + self.model_type + "_" + type_graph + ".png", dpi =500)
 
 
     def plot_model(self):
@@ -35,7 +34,7 @@ class plot_graphs(object):
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'Validation'], loc='upper left')
-        plt.savefig(self.model_detail_path + self.algorithm_name + '_accuracy' + '.png', dpi =500)
+        plt.savefig(self.model_detail + self.algorithm_name + self.model_type + '_accuracy' + '.png', dpi =500)
         plt.clf()
 
         plt.plot(self.q_learning_models.history['loss'])
@@ -43,7 +42,7 @@ class plot_graphs(object):
         plt.ylabel('loss')
         plt.xlabel('epoch')
         plt.legend(['train', 'Validation'], loc='upper left')
-        plt.savefig(self.model_detail_path + self.algorithm_name + '_lost'+'.png', dpi =500)
+        plt.savefig(self.model_detail + self.algorithm_name + self.model_type + '_lost'+'.png', dpi =500)
         plt.clf()
 
 

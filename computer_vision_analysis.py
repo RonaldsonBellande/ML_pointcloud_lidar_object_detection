@@ -20,7 +20,7 @@ if __name__ == "__main__":
             elif sys.argv[2] == "model3":
                 input_model = "model3_computer_vision_categories_10_model.h5"
 
-            computer_vision_analysis_obj = classification_with_model(save_model=input_model)
+            computer_vision_analysis_obj = classification_with_model(saved_model=input_model)
 
 
         if sys.argv[1] == "transfer_learning":
@@ -31,7 +31,7 @@ if __name__ == "__main__":
             elif sys.argv[2] == "model3":
                 input_model = "model3_computer_vision_categories_10_model.h5"
             
-            computer_vision_analysis_obj = transfer_learning(save_model=input_model, model_type=sys.argv[3])
+            computer_vision_analysis_obj = transfer_learning(saved_model=input_model, model_type=sys.argv[3])
 
 
         if sys.argv[1] == "pointcloud_visual":
@@ -46,7 +46,7 @@ if __name__ == "__main__":
             elif sys.argv[2] == "model3":
                 input_model = "model3_computer_vision_categories_10_model.h5"
 
-            computer_vision_analysis_obj = continuous_learning(save_model=input_model, model_type=sys.argv[3], episode=1, algorithm_name="deep_q_learning", transfer_learning="true")
+            computer_vision_analysis_obj = continuous_learning(saved_model=input_model, model_type=sys.argv[3], episode=1, algorithm_name=sys.argv[4], transfer_learning="true")
 
 
         if sys.argv[1] == "segmentation":

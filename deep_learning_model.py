@@ -80,8 +80,8 @@ class deep_q_learning(models):
                 self.train_dueling_deep_q_learning()
    
 
-    def target_model_update(self):
-        if self.reach_goal:
+    def target_model_update(self, done):
+        if done:
             self.target_update_counter += 1
 
         if self.target_update_counter > self.target_update:
@@ -147,7 +147,7 @@ class deep_q_learning(models):
         self.X_train.extend(X)
         self.Y_train.extend(Y)
         
-        self.q_learning_models = self.model.fit(np.array(self.X_train), np.array(self.Y_train), 
+        self.q_learning_models = self.model.fit(np.array(X), np.array(Y), 
             batch_size=self.batch, 
             verbose=0, 
             epochs=self.epochs[0], 
@@ -182,7 +182,7 @@ class deep_q_learning(models):
         self.X_train.extend(X)
         self.Y_train.extend(Y)
         
-        self.model.fit(np.array(X), np.array(Y), 
+        self.q_learning_models = self.model.fit(np.array(X), np.array(Y), 
             batch_size=self.batch, 
             verbose=0, 
             epochs=self.epochs[0], 
