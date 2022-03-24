@@ -62,9 +62,6 @@ class plot_graphs(object):
 
     
     def read_file_type(self, input_file):
-        count = 0
-        figure = plt.figure()
-        axis = figure.add_subplot(111, projection='3d')
         self.files = [self.true_path + input_file + '/' + i for i in os.listdir(self.true_path + '/' + input_file)]
         
         for pointcloud_files in self.files:
@@ -76,10 +73,6 @@ class plot_graphs(object):
             axis.set_title(str(pointcloud_files[34:-4]))
             plt.savefig(str(self.save_path) + str(input_file) + "/" + "image" + str(count) + '.png', dpi=500)
             
-            if count == 10:
-                break
-
-            count +=1
     
     def vertices_and_faces(self, file_name):
         with open(file_name, 'r') as file:
