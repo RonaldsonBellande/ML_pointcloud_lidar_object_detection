@@ -52,15 +52,14 @@ class classification_with_model(object):
 
     def plot_prediction_with_model(self):
 
-        plt.figure(dpi=500)
+        fig=plt.figure(dpi=500)
         predicted_classes = self.model.predict(self.X_test)
+        axis=fig.add_subplot(111, projection='3d')
         
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
-            fig=plt.imshow(self.X_test[i,:,:,:])
-            fig.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
-            fig.set_title(str(pointcloud_files[34:-4]))
-            fig=plt.imshow()
+            axis.plot_trisurf(self.pointcloud_data[i][0][:, 0], self.pointcloud_data[i][0][:,1], triangles=self.pointcloud_data[i][1], Z=self.pointcloud_data[i][0][:,2])
+            plt.show()
             plt.axis('off')
             plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
             plt.tight_layout()
