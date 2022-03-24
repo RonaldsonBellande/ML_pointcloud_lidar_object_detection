@@ -5,6 +5,7 @@ class classification_with_model(object):
     def __init__(self, saved_model):
         
         self.pointcloud = []
+        self.pointcloud_data = []
         self.number_of_points = 2048
         self.saved_model = saved_model
         self.model = keras.models.load_model("models/" + self.saved_model)
@@ -32,8 +33,11 @@ class classification_with_model(object):
             self.pointcloud_file = [self.true_path + label + '/' + i for i in os.listdir(self.true_path + '/' + label)]
             for point in self.pointcloud_file:
                 self.pointcloud.append(trimesh.load(point).sample(self.number_of_points))
+                vertice, face = self.vertices_and_faces(point)
+                self.pointcloud_data.append((vertice, face))
         
         self.pointcloud = np.array(self.pointcloud)
+        self.pointcloud_data = np.array(self.pointcloud_data)
         self.pointcloud =  self.pointcloud.reshape(self.pointcloud.shape[0], self.pointcloud.shape[1], self.pointcloud.shape[2], 1)
         self.X_test = self.pointcloud.astype("float32") / 255
 
@@ -53,28 +57,27 @@ class classification_with_model(object):
         
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
+            fig=plt.imshow(self.X_test[i,:,:,:])
+            fig.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
+            fig.set_title(str(pointcloud_files[34:-4]))
+            fig=plt.imshow()
             plt.axis('off')
             plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
             plt.tight_layout()
             plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction" + str(self.saved_model) + '.png')
 
 
-    def read_file_type(self, pointcloud_data):
-        
-        vertice, face = self.vertices_and_faces(pointcloud_data)
-        faces_area = np.zeros((len(face)))
-        vertice = np.array(vertice)
-        axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
-        axis.set_title(str(pointcloud_files[34:-4]))
-
-        return 
-            
     
-    def vertices_and_faces(self, pointcloud_data):
+    def vertices_and_faces(self, file_name):
+        with open(file_name, 'r') as file:
+            if 'OFF' != file.readline().strip():
+                raise('Not a valid OFF header')
             
             n_verts, n_faces, __ = tuple([int(s) for s in file.readline().strip().split(' ')])
             vertices = [[float(s) for s in file.readline().strip().split(' ')] for i in range(n_verts)]
             faces = [[int(s) for s in file.readline().strip().split(' ')][1:] for i in range(n_faces)]
-            return vertices, faces
+
+            return  np.array(vertices), np.zeros((len(faces)))
+
 
         
