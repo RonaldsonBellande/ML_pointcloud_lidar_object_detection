@@ -7,7 +7,6 @@ class plot_graphs(object):
         self.true_path = self.path + "Testing/"
         self.number_images_to_plot = 16
 
-        
 
     def plot_episode_time_step(self, data, type_graph):
 
@@ -53,6 +52,7 @@ class plot_graphs(object):
         predicted_classes = self.model.predict(self.X_test)
         
         for i in range(self.number_images_to_plot):
+            fig=plt.imshow(self.X_test[i,:,:,:])
             plt.subplot(4,4,i+1)
             plt.axis('off')
             plt.title("Predicted - {}".format(self.model_category[np.argmax(predicted_classes[i], axis=0)]), fontsize=1)
@@ -61,23 +61,18 @@ class plot_graphs(object):
 
 
     
-    def read_file_type(self, input_file):
-        self.files = [self.true_path + input_file + '/' + i for i in os.listdir(self.true_path + '/' + input_file)]
+    def read_file_type(self, pointcloud_data):
         
-        for pointcloud_files in self.files:
-            vertice, face = self.vertices_and_faces(pointcloud_files)
-            faces_area = np.zeros((len(face)))
-            vertice = np.array(vertice)
-            
-            axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
-            axis.set_title(str(pointcloud_files[34:-4]))
-            plt.savefig(str(self.save_path) + str(input_file) + "/" + "image" + str(count) + '.png', dpi=500)
+        vertice, face = self.vertices_and_faces(pointcloud_data)
+        faces_area = np.zeros((len(face)))
+        vertice = np.array(vertice)
+        axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
+        axis.set_title(str(pointcloud_files[34:-4]))
+
+        return 
             
     
-    def vertices_and_faces(self, file_name):
-        with open(file_name, 'r') as file:
-            if 'OFF' != file.readline().strip():
-                raise('Not a valid OFF header')
+    def vertices_and_faces(self, pointcloud_data):
             
             n_verts, n_faces, __ = tuple([int(s) for s in file.readline().strip().split(' ')])
             vertices = [[float(s) for s in file.readline().strip().split(' ')] for i in range(n_verts)]
