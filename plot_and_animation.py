@@ -6,6 +6,7 @@ class plot_graphs(object):
 
         self.true_path = self.path + "Testing/"
         self.number_images_to_plot = 16
+
         
 
     def plot_episode_time_step(self, data, type_graph):
@@ -58,5 +59,36 @@ class plot_graphs(object):
             plt.tight_layout()
             plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction_continuous_learning" + str(self.save_model) + '.png')
 
+
+    
+    def read_file_type(self, input_file):
+        count = 0
+        figure = plt.figure()
+        axis = figure.add_subplot(111, projection='3d')
+        self.files = [self.true_path + input_file + '/' + i for i in os.listdir(self.true_path + '/' + input_file)]
+        
+        for pointcloud_files in self.files:
+            vertice, face = self.vertices_and_faces(pointcloud_files)
+            faces_area = np.zeros((len(face)))
+            vertice = np.array(vertice)
+            
+            axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
+            axis.set_title(str(pointcloud_files[34:-4]))
+            plt.savefig(str(self.save_path) + str(input_file) + "/" + "image" + str(count) + '.png', dpi=500)
+            
+            if count == 10:
+                break
+
+            count +=1
+    
+    def vertices_and_faces(self, file_name):
+        with open(file_name, 'r') as file:
+            if 'OFF' != file.readline().strip():
+                raise('Not a valid OFF header')
+            
+            n_verts, n_faces, __ = tuple([int(s) for s in file.readline().strip().split(' ')])
+            vertices = [[float(s) for s in file.readline().strip().split(' ')] for i in range(n_verts)]
+            faces = [[int(s) for s in file.readline().strip().split(' ')][1:] for i in range(n_faces)]
+            return vertices, faces
 
 
