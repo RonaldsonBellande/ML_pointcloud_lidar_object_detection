@@ -27,7 +27,6 @@ class computer_vision_building(models):
             self.model = self.create_model_3()
 
         self.save_model_summary()
-        print("finished")
     
 
     def setup_structure(self):
