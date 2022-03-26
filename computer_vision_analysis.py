@@ -5,11 +5,11 @@ if __name__ == "__main__":
     if len(sys.argv) != 1:
 
         if sys.argv[1] == "model_building":
-            computer_vision__analysis_obj = computer_vision_building(model_type=sys.argv[2])
+            computer_vision__analysis_obj = model_building(model_type=sys.argv[2])
 
 
         if sys.argv[1] == "model_training":
-            computer_vision_analysis_obj = computer_vision_training(model_type=sys.argv[2])
+            computer_vision_analysis_obj = model_training(model_type=sys.argv[2])
         
 
         if sys.argv[1] == "pointcloud_prediction":

@@ -1,7 +1,7 @@
 from header_imports import *
 
 
-class computer_vision_building(models):
+class model_building(models):
     def __init__(self, model_type):
 
         self.pointcloud = []

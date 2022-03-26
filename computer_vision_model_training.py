@@ -1,6 +1,6 @@
 from header_imports import *
 
-class computer_vision_training(computer_vision_building):
+class model_training(model_building):
     def __init__(self, model_type):
         super().__init__(model_type)
         
