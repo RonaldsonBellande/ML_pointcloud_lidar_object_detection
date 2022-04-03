@@ -59,24 +59,3 @@ class plot_graphs(object):
             plt.tight_layout()
             plt.savefig(self.graph_path + "model_classification_detection_with_model_trained_prediction_continuous_learning" + str(self.saved_model) + '.png')
 
-
-    
-    def read_file_type(self, pointcloud_data):
-        
-        vertice, face = self.vertices_and_faces(pointcloud_data)
-        faces_area = np.zeros((len(face)))
-        vertice = np.array(vertice)
-        axis.plot_trisurf(vertice[:, 0], vertice[:,1], triangles=faces_area, Z=vertice[:,2])
-        axis.set_title(str(pointcloud_files[34:-4]))
-
-        return 
-            
-    
-    def vertices_and_faces(self, pointcloud_data):
-            
-            n_verts, n_faces, __ = tuple([int(s) for s in file.readline().strip().split(' ')])
-            vertices = [[float(s) for s in file.readline().strip().split(' ')] for i in range(n_verts)]
-            faces = [[int(s) for s in file.readline().strip().split(' ')][1:] for i in range(n_faces)]
-            return vertices, faces
-
-

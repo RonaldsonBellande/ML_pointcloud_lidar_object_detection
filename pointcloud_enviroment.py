@@ -9,7 +9,6 @@ class classification_enviroment(gym.Env):
         self.step_count = 0
 
         self.X, self.Y = data_set[0], data_set[1]
-
         self.action_space = spaces.Discrete(self.number_classes)
         self.state_space = spaces.Box(low=0, high=1, shape=(self.X.shape[1], self.X.shape[2], 1), dtype=np.float32)
 
@@ -20,7 +19,6 @@ class classification_enviroment(gym.Env):
         action = np.argmax(action.numpy())
         reward = int(action == self.expected_action)
         next_state = self.state()
-
         self.step_count += 1
         if self.step_count >= self.images_per_episode:
             done = True

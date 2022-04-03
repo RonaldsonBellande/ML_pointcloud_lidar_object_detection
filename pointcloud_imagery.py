@@ -18,7 +18,6 @@ class pointcloud_imagery(object):
             self.check_valid(self.category_names[i])
 
         for i in range(self.number_classes):
-            print(self.category_names[i])
             self.read_file_type(self.category_names[i])
 
 
@@ -30,7 +29,6 @@ class pointcloud_imagery(object):
         
         for pointcloud_files in self.files:
             vertice, face = self.vertices_and_faces(pointcloud_files)
-
             faces_area = np.zeros((len(face)))
             vertice = np.array(vertice)
             
