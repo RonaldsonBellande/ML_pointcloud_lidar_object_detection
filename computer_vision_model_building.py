@@ -32,8 +32,8 @@ class model_building(models):
     def setup_structure(self):
 
         self.category_names =  os.listdir(self.true_path)
-        folder = next(os.walk(self.true_path))[1]
-        self.number_classes = len(folder)
+        self.number_classes = len(next(os.walk(self.true_path))[1])
+
         for i in range(0, self.number_classes):
             self.check_valid(self.category_names[i])
         
