@@ -13,7 +13,6 @@ class classification_enviroment(gym.Env):
 
 
     def step(self, action):
-        
         done = False
         action = np.argmax(action.numpy())
         reward = int(action == self.expected_action)
@@ -35,5 +34,4 @@ class classification_enviroment(gym.Env):
         self.step_count = 0
         next_state = self.state()
         return next_state
-
 
