@@ -12,12 +12,10 @@ class transfer_learning(models):
         self.epochs = [1, 5, 15, 50, 100, 200]
         self.number_of_points = 2048
         self.model_path = "models/transfer_learning/" 
-        self.path  = "PointCloud_data/"
-        self.true_path = self.path + "PointCloud/"
         self.number_images_to_plot = 16
         self.valid_images = [".off"]
         self.labelencoder = LabelEncoder()
-        self.graph_path = "graph_charts/" + "transfer_learning_with_model/"
+        self.graph_path = "graph_charts/transfer_learning_with_model/"
         
         self.setup_structure()
         self.splitting_data_normalize()
@@ -42,7 +40,9 @@ class transfer_learning(models):
 
 
     def setup_structure(self):
-
+        
+        self.path  = "PointCloud_data/"
+        self.true_path = self.path + "PointCloud/"
         self.category_names =  os.listdir(self.true_path)
         self.number_classes = len(next(os.walk(self.true_path))[1])
         

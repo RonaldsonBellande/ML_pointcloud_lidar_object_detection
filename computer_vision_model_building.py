@@ -7,8 +7,6 @@ class model_building(models):
         self.pointcloud = []
         self.label_name = []
         self.image_size = 224
-        self.path  = "PointCloud_data/"
-        self.true_path = self.path + "PointCloud/"
         self.number_of_points = 2048
         self.valid_images = [".off"]
         self.model_type = model_type
@@ -30,7 +28,9 @@ class model_building(models):
     
 
     def setup_structure(self):
-
+        
+        self.path  = "PointCloud_data/"
+        self.true_path = self.path + "PointCloud/"
         self.category_names =  os.listdir(self.true_path)
         self.number_classes = len(next(os.walk(self.true_path))[1])
 

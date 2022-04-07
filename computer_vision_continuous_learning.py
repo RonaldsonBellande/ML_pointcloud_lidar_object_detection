@@ -4,7 +4,7 @@ from header_imports import *
 class continuous_learning(deep_q_learning, classification_enviroment, plot_graphs):
     def __init__(self, saved_model, model_type, episode, noise=0.0, reward_noise=0.0, state_world_size=400, algorithm_name="deep_q_learning", transfer_learning="true"):
         
-        self.algorithm_details_path = "graphs_charts/"
+        self.algorithm_details_path = "graph_charts/"
         self.algorithm_details = self.algorithm_details_path + "algorithm_details/"
         self.model_detail = self.algorithm_details_path + "model_details/"
         self.graph_path = self.algorithm_details_path + "continuous_learning_with_models/"
@@ -19,8 +19,6 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
         self.epochs = [1, 5, 15, 50, 100, 200]
         self.number_of_points = 2048
         self.model_path = "models/continuous_learning/" 
-        self.path  = "PointCloud_data/"
-        self.true_path = self.path + "PointCloud_Additional/"
         self.number_images_to_plot = 16
         self.valid_images = [".off"]
         self.labelencoder = LabelEncoder()
@@ -55,7 +53,9 @@ class continuous_learning(deep_q_learning, classification_enviroment, plot_graph
 
 
     def setup_structure(self):
-
+        
+        self.path  = "PointCloud_data/"
+        self.true_path = self.path + "PointCloud_Additional/"
         self.category_names =  os.listdir(self.true_path)
         self.number_classes = len(next(os.walk(self.true_path))[1])
         
