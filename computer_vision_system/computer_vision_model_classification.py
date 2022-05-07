@@ -58,9 +58,6 @@ class classification_with_model(object):
          
         for i in range(self.number_images_to_plot):
             plt.subplot(4,4,i+1)
-            print("1: ", self.pointcloud_data[i])
-            print("2: ", self.pointcloud_data[i][0])
-            print("3: ", self.pointcloud_data[i][1])
             axis.plot_trisurf(self.pointcloud_data[i][0][:, 0], self.pointcloud_data[i][0][:,1], triangles=self.pointcloud_data[i][1], Z=self.pointcloud_data[i][0][:,2])
             plt.show()
             plt.axis('off')

@@ -32,6 +32,7 @@ class model_building(models):
         self.path  = "PointCloud_data/"
         self.true_path = self.path + "PointCloud/"
         self.category_names =  os.listdir(self.true_path)
+        print(self.category_names)
         self.number_classes = len(next(os.walk(self.true_path))[1])
 
         for i in range(0, self.number_classes):
